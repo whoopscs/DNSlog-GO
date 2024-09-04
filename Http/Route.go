@@ -9,6 +9,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -99,8 +100,10 @@ func verifyDns(w http.ResponseWriter, r *http.Request) {
 			Msg:            "false",
 		}
 		for _, v := range Dns.DnsData[key] {
-			if v.Subdomain == Q.Query {
-				resp.Msg = "true"
+			//if v.Subdomain == Q.Query {
+			if strings.Contains(v.Subdomain, Q.Query) {
+				//resp.Msg = "true"
+				resp.Msg = v.Subdomain // 将响应消息设置为匹配的Subdomain
 				break
 			}
 
